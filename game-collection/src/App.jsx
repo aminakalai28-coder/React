@@ -7,7 +7,6 @@ import Footer from "./components/Footer";
 import GameCard from "./components/GameCard";
 
 function App() {
-
     const [search, setSearch] = useState("");
 
     return (
@@ -37,6 +36,7 @@ function App() {
                             genre={game.genre}
                             rating={game.rating}
                             year={game.year}
+                            image={game.image}
                         />
                     ))}
             </div>
