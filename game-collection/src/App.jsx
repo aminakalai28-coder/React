@@ -1,10 +1,13 @@
 
 import "./App.css";
+import { useState } from "react";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 import GameCard from "./components/GameCard";
 
 function App() {
+
+    const [search, setSearch] = useState("");
 
     const games = [
         {
@@ -26,6 +29,21 @@ function App() {
             id: 4,
             title: "GTA V",
             platform: "PlayStation 5"
+        },
+        {
+            id: 5,
+            title: "The Legend of Zelda",
+            platform: "Nintendo Switch"
+        },
+        {
+            id: 6,
+            title: "Fortnite",
+            platform: "PC"
+        },
+        {
+            id: 7,
+            title: "EA Sports FC 26",
+            platform: "PlayStation 5"
         }
     ];
 
@@ -35,14 +53,32 @@ function App() {
 
             <h2>Welkom bij mijn Game Collection!</h2>
 
+            <input
+                className="search-input"
+                type="text"
+                placeholder="Zoek een game..."
+                value={search}
+                onChange={(e) => setSearch(e.target.value)}
+            />
+
             <div className="game-list">
-                {games.map((game) => (
-                    <GameCard
-                        key={game.id}
-                        title={game.title}
-                        platform={game.platform}
-                    />
-                ))}
+                {games
+                    .filter((game) =>
+                        game.title.toLowerCase().includes(search.toLowerCase())
+                    )
+                    .map((game) => (
+                        <GameCard
+                            key={game.id}
+                            title={game.title}
+                            platform={game.platform}
+                        />
+                    ))}
+            </div>
+
+            <div className="student-info">
+                <p>Naam: Salim Akalai</p>
+                <p>Klas: 25B</p>
+                <p>Studentnummer: 2238463</p>
             </div>
 
             <Footer />
