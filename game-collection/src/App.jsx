@@ -9,37 +9,55 @@ import GameCard from "./components/GameCard";
 function App() {
     const [search, setSearch] = useState("");
 
+    const filteredGames = games.filter((game) =>
+        game.title.toLowerCase().includes(search.toLowerCase()) ||
+        game.platform.toLowerCase().includes(search.toLowerCase()) ||
+        game.genre.toLowerCase().includes(search.toLowerCase()) ||
+        (game.developer || "").toLowerCase().includes(search.toLowerCase())
+    );
+
     return (
         <div className="container">
-            <Header title="🎮 Game Collection" />
+            <Header title="🎮 Salim's Game Collection" />
 
-            <h2>Welkom bij mijn Game Collection!</h2>
+            <h2>Ontdek mijn favoriete games!</h2>
+            <p className="intro">
+                Mijn persoonlijke verzameling van games.
+            </p>
 
             <input
                 className="search-input"
                 type="text"
-                placeholder="Zoek een game..."
+                placeholder="Zoek op game, platform, genre of developer..."
                 value={search}
                 onChange={(e) => setSearch(e.target.value)}
             />
 
+            <p className="game-count">
+                Aantal gevonden games: {filteredGames.length}
+            </p>
+
             <div className="game-list">
-                {games
-                    .filter((game) =>
-                        game.title.toLowerCase().includes(search.toLowerCase())
-                    )
-                    .map((game) => (
-                        <GameCard
-                            key={game.id}
-                            title={game.title}
-                            platform={game.platform}
-                            genre={game.genre}
-                            rating={game.rating}
-                            year={game.year}
-                            image={game.image}
-                        />
-                    ))}
+                {filteredGames.map((game) => (
+                    <GameCard
+                        key={game.id}
+                        title={game.title}
+                        platform={game.platform}
+                        genre={game.genre}
+                        rating={game.rating}
+                        year={game.year}
+                        image={game.image}
+                        developer={game.developer}
+                        multiplayer={game.multiplayer}
+                    />
+                ))}
             </div>
+
+            {filteredGames.length === 0 && (
+                <p className="no-results">
+                    Geen games gevonden.
+                </p>
+            )}
 
             <div className="student-info">
                 <p>Naam: Salim Akalai</p>
